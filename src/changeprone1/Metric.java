@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package test;
+package changeprone1;
 
 import changeprone1.MainUI;
 import java.io.File;
@@ -72,7 +72,7 @@ public void addCho(File f) throws IOException, BiffException, WriteException
     for(int i =0;i<sheetno; i++)
     {
         WritableSheet sheet2 = workbook.getSheet(i);
-        System.out.println(sheet2.getCell(0,0).getContents());
+//        System.out.println(sheet2.getCell(0,0).getContents());
         HashMap<String,TachAndChd> tachandchd = new HashMap<>();
         int col_tach = -1;
         int loc_col = -1;
@@ -126,14 +126,14 @@ public void addCho(File f) throws IOException, BiffException, WriteException
 
            lcaandlcd.add(tachandchd);
         }// end of all the rows in a single sheet
-        System.out.println( "Cho  and Chd adding completed");
+        
 
     } // end of all the sheet
 
     workbook.write();
     workbook.close();
     workbook1.close();
-
+ System.out.println( "Cho  and Chd adding completed");  
  }
     
  public void addFchAndLch(File f) throws IOException, BiffException, WriteException
@@ -496,7 +496,7 @@ public void addAcdfAndATAF(File f) throws IOException, BiffException, WriteExcep
                         sheet2.addCell(wfr_metric_value);
                         
                         
-                        icp_val = (double)frch_value / (curr_version - boc_value);
+                        icp_val = (double)frch_value / (curr_version - boc_value + 1);
                         
 //                        System.out.println(filename + " has " + frch_value + " and " + curr_version +  " and " + boc_value );
                         jxl.write.Number icp_metric_value = new jxl.write.Number(icp_col, j,icp_val);
@@ -575,7 +575,11 @@ public void addCP(File f) throws IOException, BiffException, WriteException
         for (int j = 1; j < sheet2.getRows(); j++) {
             filename = sheet2.getCell(0, j).getContents();
            
-            int cho_val = metricCP.get(i+1).get(filename);
+            int cho_val;
+            if(metricCP.get(i+1).get(filename)!=null)
+              cho_val = metricCP.get(i+1).get(filename);
+            else
+                cho_val = 1;
             if(cho_val==0)
                 cp_val = 0;
             else cp_val = 1;

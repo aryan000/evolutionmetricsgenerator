@@ -55,6 +55,32 @@ public File Upload_Button()
     return myfolder;
 }
 
+public File[] Upload_All()
+{
+    String userDir = System.getProperty("user.home");
+    JFileChooser folder = new JFileChooser(userDir+"/Desktop");
+    folder.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+    folder.setMultiSelectionEnabled(true);
+    int return_value = folder.showDialog(null,"Select Folder ");
+    File[] myfolder = null;
+    if(return_value == JFileChooser.APPROVE_OPTION)
+    {
+        myfolder = folder.getSelectedFiles();
+    }
+
+    if(myfolder!=null)
+    {
+        JOptionPane.showMessageDialog(null,"The current choosen file directory is : " + myfolder);
+    } 
+    else
+    {
+        JOptionPane.showMessageDialog(null,"You have made no selection : ");
+    }
+
+    return myfolder;
+} 
+
+
 ArrayList<Files> filenames = new ArrayList<>();
 
  public void  sortByName()
