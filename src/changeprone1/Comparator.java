@@ -12,6 +12,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import static java.lang.Integer.max;
 import java.util.ArrayList;
 import java.util.List;
 import static junit.framework.Assert.fail;
@@ -105,8 +106,9 @@ public class Comparator
             }
 
 //            System.out.println( changesFromOriginal.get(0).getLines().size());
-            System.out.println("number of lines changed is : " + ans);
-
+//            System.out.println("number of lines changed is : " + ans);
+//            System.out.println("number of total deletion is : " + changesFromOriginal.size());
+            ans = max(ans , changesFromOriginal.size());
         } catch (IOException ioe) {
             fail("Error running test shouldGetChangesBetweenFiles " + ioe.toString());
         }
@@ -125,7 +127,8 @@ public class Comparator
 //                System.out.println(changesFromOriginal1.getLines().size());
                 ans += insertsFromOriginal1.getLines().size();
             }
-            System.out.println("NUmber of Lines inserted is : " + insertsFromOriginal.size());
+//            System.out.println("NUmber of Lines inserted is : " + insertsFromOriginal.size());
+             ans = max(ans , insertsFromOriginal.size());
         } catch (IOException ioe) {
             fail("Error running test shouldGetInsertsBetweenFiles " + ioe.toString());
         }
@@ -144,7 +147,8 @@ public class Comparator
 //                System.out.println(changesFromOriginal1.getLines().size());
                 ans += deletesFromOriginal1.getLines().size();
             }
-            System.out.println("Number os lines deleted " + deletesFromOriginal.size());
+//            System.out.println("Number os lines deleted " + deletesFromOriginal.size());
+             ans = max(ans , deletesFromOriginal.size());
         } catch (IOException ioe) {
             fail("Error running test shouldGetDeletesBetweenFiles " + ioe.toString());
         }

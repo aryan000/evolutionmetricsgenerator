@@ -5,6 +5,7 @@
  */
 package changeprone1;
 
+import test.Metric;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -119,6 +120,15 @@ public class MainUI extends javax.swing.JFrame {
         else 
         {
             System.out.println("No Option");
+            Metric m = new Metric();
+            
+            m.addCho(f);
+            m.addFchAndLch(f);
+            m.addWchAndWCD(f);
+            m.addAcdfAndATAF(f);
+            m.addCP(f);
+                   
+            
         }
              
     }

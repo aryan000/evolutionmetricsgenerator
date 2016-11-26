@@ -121,7 +121,7 @@ public void createSheet( WritableWorkbook workbook , File f  ) throws IOExceptio
 {       
   System.out.println("Creating the Output File ");
   workbook = Workbook.createWorkbook(f);
-  String version = "version " +  0 ;
+  String version = "version " +  1 ;
   WritableSheet sheet = workbook.createSheet(version, 0);
   int count = 1;
   int row =  0 ;
@@ -142,6 +142,7 @@ public void createSheet( WritableWorkbook workbook , File f  ) throws IOExceptio
     sheet.addCell(loc);
     int boc_value = Boc.curr_version;
     Boc.bocMap.put(filename.Filename, boc_value);
+    Tach.tachMap.put(filename.Filename, location);
     Number boc = new Number(column++ , row , boc_value);
     Number tach = new Number(column++ , row , 0);
     sheet.addCell(boc);
@@ -165,7 +166,7 @@ public void addsheet(Workbook workbook1, File f) throws IOException, WriteExcept
   WritableSheet sheet2 = workbook.getSheet(i);
  }
  
-  String version = "version " + sheetno;
+  String version = "version " + (sheetno + 1);
   WritableSheet sheet = workbook.createSheet(version, sheetno + 1);
   Boc.curr_version = sheetno + 1;
   int count = 1;
@@ -221,7 +222,13 @@ public void addsheet(Workbook workbook1, File f) throws IOException, WriteExcept
    workbook1.close();
    System.out.println("finished when the file already exists");
  } 
+   
 
+   public static void main(String s[])
+   {
+       MainUI m = new MainUI();
+       m.setVisible(true);
+   }
 }
 
 
