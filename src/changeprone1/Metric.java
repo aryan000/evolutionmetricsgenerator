@@ -9,6 +9,8 @@ import changeprone1.MainUI;
 import java.io.File;
 import java.io.IOException;
 import static java.lang.Math.abs;
+import java.text.NumberFormat;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.logging.Level;
@@ -68,7 +70,7 @@ public void addCho(File f) throws IOException, BiffException, WriteException
     System.out.println("Adding cho in files");
     WritableWorkbook workbook = Workbook.createWorkbook(f, workbook1); // write mode
     int sheetno = workbook.getNumberOfSheets();
-
+   String  filename = "";
     for(int i =0;i<sheetno; i++)
     {
         WritableSheet sheet2 = workbook.getSheet(i);
@@ -101,7 +103,7 @@ public void addCho(File f) throws IOException, BiffException, WriteException
         {
             for(int j=1;j<sheet2.getRows();j++)
             {   
-                String  filename = sheet2.getCell(0,j).getContents();
+                 filename = sheet2.getCell(0,j).getContents();
                 tach_value = Integer.parseInt(sheet2.getCell(col_tach, j).getContents());
                 loc_value = Integer.parseInt(sheet2.getCell(loc_col, j).getContents());
                 if(tach_value==0)
@@ -116,19 +118,24 @@ public void addCho(File f) throws IOException, BiffException, WriteException
                     sheet2.addCell(cho);
                 }
 
+                if(tach_value==0)
+                    chd_value = 0;
+                else
                 chd_value = (double)tach_value/loc_value;
+                
 
                 jxl.write.Number chd = new jxl.write.Number(chd_col , j , chd_value);
                 sheet2.addCell(chd);
-
                 tachandchd.put(filename, new TachAndChd(tach_value,chd_value));
             } 
 
            lcaandlcd.add(tachandchd);
         }// end of all the rows in a single sheet
         
-
+           
     } // end of all the sheet
+    
+    
 
     workbook.write();
     workbook.close();
@@ -160,8 +167,8 @@ public void addCho(File f) throws IOException, BiffException, WriteException
         int lca_col = fch_col+5;
         int lcd_col = fch_col + 6;
         int wch_col = fch_col + 7;
-        int csd_value ;
-        double csbc_value;
+        int csb_value ;
+        double csbs_value;
         int loc_col = -1;
         int boc_col = 1;
         int tach_col = 1, chd_col = 1;
@@ -277,27 +284,33 @@ public void addCho(File f) throws IOException, BiffException, WriteException
                int loc_value = Integer.parseInt(sheet2.getCell(loc_col, j).getContents());
                if(loc.containsKey(filename))
                {
-                   csd_value = abs(loc_value - loc.get(filename));
-                   csbc_value = (double)csd_value/loc.get(filename);
+                   csb_value = abs(loc_value - loc.get(filename));
+                   
+                   if(csb_value==0)
+                       csbs_value = 0;
+                   else
+                   csbs_value = (double)csb_value/loc.get(filename);
                }
                else
                {
-                   csd_value = 0;
-                   csbc_value = 0;
+                   csb_value = 0;
+                   csbs_value = 0;
                    loc.put(filename,loc_value);
                }
 
-                jxl.write.Number csd_metric_value = new jxl.write.Number(csd_col, j, csd_value);
+                jxl.write.Number csd_metric_value = new jxl.write.Number(csd_col, j, csb_value);
                 sheet2.addCell(csd_metric_value);
 
-                 jxl.write.Number csbc_metric_value = new jxl.write.Number(csbc_col, j, csbc_value);
+                 jxl.write.Number csbc_metric_value = new jxl.write.Number(csbc_col, j, csbs_value);
                  sheet2.addCell(csbc_metric_value);
 
 
  // adding lca and lcd
                    try{
+                       
                         int tach_value  =  Integer.parseInt(sheet2.getCell(tach_col, j).getContents());
-                        double chd_value =  Double.parseDouble(sheet2.getCell( chd_col, j).getContents());
+                        NumberFormat nf = NumberFormat.getInstance();
+                        double chd_value =  nf.parse(sheet2.getCell( chd_col, j).getContents()).doubleValue();
 
                         int lca_value ;
                         double lcd_value;
@@ -311,13 +324,16 @@ public void addCho(File f) throws IOException, BiffException, WriteException
                         {    
 //                            System.out.println("for filename : " + filename + " lch is not equal to tach ");
                             HashMap<String,TachAndChd> lca = lcaandlcd.get(lch_val - 1);
-
+                            
+                            
                             lca_value = lca.get(filename).getTach();
                             lcd_value =  lca.get(filename).getChd();
+                            
+                            
                         }
 
 
-             //System.out.println( " lca value is : " + lca_value + " and " + "lcd value is :  " + lcd_value);
+                       //System.out.println( " lca value is : " + lca_value + " and " + "lcd value is :  " + lcd_value);
                         jxl.write.Number lca_metric_value = new jxl.write.Number(lca_col, j, lca_value);
                         sheet2.addCell(lca_metric_value);
                         jxl.write.Number lcd_metric_value = new jxl.write.Number(lcd_col, j, lcd_value);
@@ -326,7 +342,10 @@ public void addCho(File f) throws IOException, BiffException, WriteException
                    catch(NumberFormatException e)
                    {
                        System.err.println(e);
-                   }                            
+                       System.out.println("this error is for " + filename);
+                   } catch (ParseException ex) {                            
+                    Logger.getLogger(Metric.class.getName()).log(Level.SEVERE, null, ex);
+                }                            
            } // end of j which is row
         }
         curr_version ++;
@@ -340,20 +359,23 @@ public void addCho(File f) throws IOException, BiffException, WriteException
 
 } 
  
-public void addWchAndWCD(File f) throws IOException, BiffException, WriteException 
+public void addWchAndWCD(File f) throws IOException, BiffException, WriteException
 {    
     Workbook workbook1 = Workbook.getWorkbook(f); // read mode
     System.out.println("Adding WCH and WCD");
     WritableWorkbook workbook = Workbook.createWorkbook(f, workbook1); // write mode
     int sheetno = workbook.getNumberOfSheets();
-
-    String filename;
+    String filename = "";
+    try
+    {
+    
     for(int i =0;i<sheetno; i++)
     {
         WritableSheet sheet2 = workbook.getSheet(i);
         int wch_col , boc_col = 2 , wcd_col ;
         
         curr_version = i+1;
+//        System.out.println(curr_version );
         for(int j =0;j<sheet2.getColumns();j++)
             { 
                 String temp = sheet2.getCell(j,0).getContents();
@@ -368,16 +390,28 @@ public void addWchAndWCD(File f) throws IOException, BiffException, WriteExcepti
         for(int j =1;j<sheet2.getRows();j++)
         { 
             filename = sheet2.getCell(0,j).getContents();
+            
             int boc_value = Integer.parseInt(sheet2.getCell(boc_col, j).getContents());
 //                    System.out.println("boc value is : "+ boc_value);
             double temp;
             double wch_value = 0 , wcd_value = 0;
 //                System.out.println(filename + boc_value+1 + curr_version );
+            
+            
+            
+            
             for(int r = boc_value + 1 ; r<= curr_version  ; r++)
             {
                 HashMap<String,TachAndChd> lca =  lcaandlcd.get(r-1);
-                int tach_val = lca.get(filename).getTach();
-                double chd_val = lca.get(filename).getChd();
+                
+                int tach_val = 0;
+                double chd_val = 0;
+                
+                if(lca.containsKey(filename))
+                {  TachAndChd t = lca.get(filename);
+                   tach_val = t.getTach();
+                   chd_val = t.getChd();
+                }
                 temp =   (double) Math.pow(2,r- curr_version);
 
                 wch_value += tach_val*temp;
@@ -391,7 +425,14 @@ public void addWchAndWCD(File f) throws IOException, BiffException, WriteExcepti
         }
 
         curr_version++;
+    } 
     }
+    catch (WriteException ex) {
+            Logger.getLogger(Metric.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("filename is : " + filename);
+            workbook.close();
+            workbook1.close();
+        }
 
    workbook.write();
    workbook.close();
@@ -413,6 +454,8 @@ public void addAcdfAndATAF(File f) throws IOException, BiffException, WriteExcep
             {
                 WritableSheet sheet2 = workbook.getSheet(i);
                 curr_version = i+1;
+                
+                
                 int acdf_col = -1 ,ataf_col = -1 , frch_col = -1 ;
                 int boc_col = 1 , frch_value=0 ,wfr_col = -1 , wfr_value=0;
                 double acdf_value = 0 , ataf_value = 0;
@@ -440,6 +483,7 @@ public void addAcdfAndATAF(File f) throws IOException, BiffException, WriteExcep
                 for(int j =1;j<sheet2.getRows();j++)
                 {
                     filename = sheet2.getCell(0,j).getContents();
+                    
                     int boc_value = Integer.parseInt(sheet2.getCell(boc_col, j).getContents());
 //                    System.out.println("boc value is : "+ boc_value);
                     frch_value = Integer.parseInt(sheet2.getCell(frch_col, j).getContents());
@@ -455,7 +499,14 @@ public void addAcdfAndATAF(File f) throws IOException, BiffException, WriteExcep
                         for(int r = boc_value + 1 ; r<= curr_version  ; r++)
                         {
                             HashMap<String,TachAndChd> lca =  lcaandlcd.get(r-1);
-                            int wfr_tach_value = lca.get(filename).getTach();
+                            
+                            int wfr_tach_value =0;
+                            
+                            if(lca.containsKey(filename))
+                            {
+                                TachAndChd t = lca.get(filename);
+                                wfr_tach_value = t.getTach();
+                            }
                             
                             if(wfr_tach_value==0)
                                 continue;
@@ -476,17 +527,33 @@ public void addAcdfAndATAF(File f) throws IOException, BiffException, WriteExcep
                         for(int r = boc_value + 1 ; r<= curr_version  ; r++)
                         {
                             HashMap<String,TachAndChd> lca = lcaandlcd.get(r-1);
-                            wfr_tach_value = lca.get(filename).getTach();
+                            
+                                                        
+                            if(lca.containsKey(filename))
+                            {
+                                TachAndChd t = lca.get(filename);
+                                wfr_tach_value = t.getTach();
+                                chd_value += t.getChd();
+                            }
+                           
                             tach_value += wfr_tach_value;
-                            chd_value += lca.get(filename).getChd();
+                            
                             
                             if(wfr_tach_value==0)
                                 continue;
                             else
                                 wfr_value += r-1;
-                        }
-                        acdf_value = (double)chd_value/frch_value;
-                        ataf_value = (double)tach_value/frch_value;
+                        } 
+                        
+                        if(chd_value==0)
+                            acdf_value = 0;
+                        else
+                             acdf_value = (double)chd_value/frch_value;
+                        
+                        if(tach_value==0)
+                            ataf_value = 0;
+                        else
+                            ataf_value = (double)tach_value/frch_value;
                         
                         jxl.write.Number acdf_metric_value = new jxl.write.Number(acdf_col, j, acdf_value);
                         sheet2.addCell(acdf_metric_value);
@@ -496,7 +563,10 @@ public void addAcdfAndATAF(File f) throws IOException, BiffException, WriteExcep
                         sheet2.addCell(wfr_metric_value);
                         
                         
-                        icp_val = (double)frch_value / (curr_version - boc_value + 1);
+                        if(frch_value==0)
+                            icp_val = 0;
+                        else
+                            icp_val = (double)frch_value / (curr_version - boc_value + 1);
                         
 //                        System.out.println(filename + " has " + frch_value + " and " + curr_version +  " and " + boc_value );
                         jxl.write.Number icp_metric_value = new jxl.write.Number(icp_col, j,icp_val);
@@ -621,8 +691,30 @@ public void create(File myfolder)
 
    public static void main(String s[])
    {
-       MainUI m = new MainUI();
-       m.setVisible(true);
+       try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Windows".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(MainUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(MainUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(MainUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(MainUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new MainUI().setVisible(true);
+            }
+        });
    }
 }
 

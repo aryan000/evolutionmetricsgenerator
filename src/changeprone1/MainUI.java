@@ -178,18 +178,24 @@ public class MainUI extends javax.swing.JFrame {
         return ;
     }
     File f = new File("C:\\Users\\aryan_000\\Desktop\\output.xls");
+    int count = 1;
     for(File myfile : mydirectory)
     { 
     ArrayList<Files> filenames = h.Get_List_Of_Files(myfile);
     try{
         if(!f.exists())
-            {  System.out.println("File Does not exist ");
+            {  
+//                System.out.println("File Does not exist ");
+                System.out.println("File sheet " + count + " added ");
+                count++;
                WritableWorkbook workbook   = null; 
                h.createSheet(workbook, f);
             }
             else          
             { 
-                System.out.println("File already found ");
+//                System.out.println("File already found ");
+                System.out.println("File sheet " + count + " added ");
+                count++;
                 Workbook workbook = Workbook.getWorkbook(f);
                 h.addsheet(workbook,f);
                 workbook.close();

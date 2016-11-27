@@ -22,6 +22,7 @@ public class Complete extends javax.swing.JFrame {
      */
     public Complete() {
         initComponents();
+         this.setResizable(false);
          
     }
 
@@ -29,6 +30,7 @@ public class Complete extends javax.swing.JFrame {
         initComponents();
         jLabel3.setText(f.getAbsolutePath());
         jLabel2.setText(f.getParent());
+        
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -63,7 +65,7 @@ public class Complete extends javax.swing.JFrame {
 
         jLabel4.setText("The file saved as ");
 
-        jButton1.setText("Open Folder");
+        jButton1.setText("Open Containing Folder");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -106,8 +108,8 @@ public class Complete extends javax.swing.JFrame {
                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                             .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(52, 52, 52)
+                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(30, 30, 30)
                             .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGap(10, 10, 10))
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -157,6 +159,7 @@ public class Complete extends javax.swing.JFrame {
          File file = new File(location);
 //         location = "C:\\Users\\aryan_000\\Desktop\\output.xls";
         try {
+            this.dispose();
             Desktop.getDesktop().open(file);
         } catch (IOException ex) {
             Logger.getLogger(Complete.class.getName()).log(Level.SEVERE, null, ex);
@@ -170,6 +173,7 @@ public class Complete extends javax.swing.JFrame {
          File file = new File(location);
 //         location = "C:\\Users\\aryan_000\\Desktop\\output.xls";
         try {
+            this.dispose();
             Desktop.getDesktop().open(file);
         } catch (IOException ex) {
             Logger.getLogger(Complete.class.getName()).log(Level.SEVERE, null, ex);
@@ -193,15 +197,11 @@ public class Complete extends javax.swing.JFrame {
                     break;
                 }
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Complete.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Complete.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Complete.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(Complete.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        
         //</editor-fold>
 
         /* Create and display the form */

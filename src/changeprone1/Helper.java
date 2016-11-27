@@ -45,7 +45,7 @@ public File Upload_Button()
 
     if(myfolder!=null)
     {
-        JOptionPane.showMessageDialog(null,"The current choosen file directory is : " + myfolder);
+        JOptionPane.showMessageDialog(null,"The current choosen file directory is : " + myfolder.getParent());
     } 
     else
     {
@@ -70,7 +70,7 @@ public File[] Upload_All()
 
     if(myfolder!=null)
     {
-        JOptionPane.showMessageDialog(null,"The current choosen file directory is : " + myfolder);
+        JOptionPane.showMessageDialog(null,"The current choosen file directory is : " + myfolder[0].getParent());
     } 
     else
     {
@@ -252,8 +252,30 @@ public void addsheet(Workbook workbook1, File f) throws IOException, WriteExcept
 
    public static void main(String s[])
    {
-       MainUI m = new MainUI();
-       m.setVisible(true);
+       try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Windows".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(MainUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(MainUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(MainUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(MainUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new MainUI().setVisible(true);
+            }
+        });
    }
 }
 
