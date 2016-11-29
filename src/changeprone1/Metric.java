@@ -640,7 +640,7 @@ public void addCP(File f) throws IOException, BiffException, WriteException
        WritableSheet sheet2 = workbook.getSheet(i);
       
         int cp_col = sheet2.getColumns();
-        int cp_val = 0 ;
+        String cp_val = "" ;
         sheet2.addCell(new Label(cp_col, 0, "CP"));
         for (int j = 1; j < sheet2.getRows(); j++) {
             filename = sheet2.getCell(0, j).getContents();
@@ -651,9 +651,9 @@ public void addCP(File f) throws IOException, BiffException, WriteException
             else
                 cho_val = 1;
             if(cho_val==0)
-                cp_val = 0;
-            else cp_val = 1;
-            jxl.write.Number cp_metric_value = new jxl.write.Number(cp_col, j,cp_val);
+                cp_val = "NO";
+            else cp_val = "YES";
+            jxl.write.Label cp_metric_value = new jxl.write.Label(cp_col, j,cp_val);
              sheet2.addCell(cp_metric_value);
            
             }
