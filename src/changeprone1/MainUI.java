@@ -5,6 +5,7 @@
  */
 package changeprone1;
 
+
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -210,7 +211,12 @@ public class MainUI extends javax.swing.JFrame {
             public void run() {
                 Random ran = new Random();
                 int x = ran.nextInt(1000) + 1;
+                
+                 ProgressBar1 pb = new ProgressBar1();
+                pb.setVisible(true);
                 File f = new File("C:\\Users\\aryan_000\\Desktop\\output" + x + ".xls");
+                
+                
                 int count = 1;
                 int total_num = mydirectory.length  + 16;
                 System.out.println(total_num);
@@ -219,8 +225,8 @@ public class MainUI extends javax.swing.JFrame {
                     inc=1;
                 System.out.println("inc is : " + inc);
                 int num = 0;
-                ProgressBar obj_frame = new ProgressBar();
-                obj_frame.setVisible(true);
+//                ProgressBar obj_frame = new ProgressBar();
+//                obj_frame.setVisible(true);
 
                 for (File myfile : mydirectory) {
                     ArrayList<Files> filenames = h.Get_List_Of_Files(myfile);
@@ -228,22 +234,25 @@ public class MainUI extends javax.swing.JFrame {
                         if (!f.exists()) {
 //                System.out.println("File Does not exist ");
                             System.out.println("File sheet " + count + " added ");
-                            count++;
+                            
                             WritableWorkbook workbook = null;
                             h.createSheet(workbook, f);
 
                             num += inc ;
-                            obj_frame.call(num);
-
+                            pb.set("File sheet " + count + " added ", num);
+                            count++;
+                            
                         } else {
 //                System.out.println("File already found ");
                             System.out.println("File sheet " + count + " added ");
-                            count++;
+                            
                             Workbook workbook = Workbook.getWorkbook(f);
                             h.addsheet(workbook, f);
                             workbook.close();
                             num += inc ;
-                            obj_frame.call(num);
+                            
+                            pb.set("File sheet " + count + " added ", num);
+                            count++;
                         }
 
                     } catch (IOException | WriteException | BiffException ex) {
@@ -255,7 +264,8 @@ public class MainUI extends javax.swing.JFrame {
                 
                 inc = (100-num)/16;
                 num = 100 - inc*16;
-                obj_frame.call(num);
+//                obj_frame.call(num);
+                
                 
                 System.out.println("inc is : " + inc  + "and " + (100- inc*4));
                 System.out.println("num is ; " + num);
@@ -264,21 +274,27 @@ public class MainUI extends javax.swing.JFrame {
 
                     m.addCho(f);// cho and chd
                         num += inc * 2;
-                        obj_frame.call(num);
+//                        obj_frame.call(num);
+                        pb.set("CHO and CHD added ", num);
                     m.addFchAndLch(f); //fch lch  frch csd csbs lca lcd
                         num += inc * 7;
-                        obj_frame.call(num);
+//                        obj_frame.call(num);
+                        pb.set("FCH LCH FRCH CSD CSBS LCA LCD", num);
                     m.addWchAndWCD(f); // wch and wcd
                         num += inc * 2;
-                        obj_frame.call(num);
+//                        obj_frame.call(num);
+                        pb.set("WCH and WCD added ", num);
                     m.addAcdfAndATAF(f); // ACDF and ATAF and WFR and ICP
                         num += inc * 4;
-                        obj_frame.call(num);
+//                        obj_frame.call(num);
+                        pb.set("ACDF AND ATAF added ", num);
                     m.addCP(f);// cp
                         num += inc;
-                        obj_frame.call(num);
+//                        obj_frame.call(num);
+                        pb.set("CP added ", num);
                     
-                    obj_frame.dispose();
+//                    obj_frame.dispose();
+                     pb.setVisible(false);
                     Complete c = new Complete(f);
                    
                     c.setVisible(true);
