@@ -67,7 +67,7 @@ public void addCho(File f) throws IOException, BiffException, WriteException
  { 
 
     Workbook workbook1 = Workbook.getWorkbook(f); // read mode
-    System.out.println("Adding cho in files");
+    System.out.println("Adding cho and chd in files");
     WritableWorkbook workbook = Workbook.createWorkbook(f, workbook1); // write mode
     int sheetno = workbook.getNumberOfSheets();
    String  filename = "";
@@ -212,7 +212,7 @@ public void addCho(File f) throws IOException, BiffException, WriteException
             for(int j =1;j<sheet2.getRows();j++)
            {
                filename = sheet2.getCell(0,j).getContents();
-               
+//               System.out.println(filename + " in the version " + i+1);
                if (fch.containsKey(filename))
                {
                    fch_val = fch.get(filename);

@@ -9,6 +9,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -45,6 +46,7 @@ public class MainUI extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jButton3 = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
+        jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Evalution Metric Calculator");
@@ -74,6 +76,13 @@ public class MainUI extends javax.swing.JFrame {
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/changeprone1/research.jpeg"))); // NOI18N
         jLabel4.setText("jLabel4");
 
+        jButton2.setText("CSV  Converter");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -81,18 +90,19 @@ public class MainUI extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(57, 57, 57)
+                        .addComponent(jLabel1)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel2)
                             .addComponent(jLabel3))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 54, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 53, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButton1)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(57, 57, 57)
-                        .addComponent(jLabel1)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                            .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
                 .addGap(93, 93, 93)
@@ -105,7 +115,7 @@ public class MainUI extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, 227, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
@@ -114,7 +124,9 @@ public class MainUI extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel3)
                     .addComponent(jButton3))
-                .addGap(39, 39, 39))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jButton2)
+                .addGap(5, 5, 5))
         );
 
         pack();
@@ -191,56 +203,102 @@ public class MainUI extends javax.swing.JFrame {
     {   JOptionPane.showMessageDialog(rootPane,"No Folder has been Selected");
         return ;
     }
-    Random ran = new Random();
-    int x = ran.nextInt(1000) + 1;
-    File f = new File("C:\\Users\\aryan_000\\Desktop\\output" + x + ".xls");
-    int count = 1;
-    for(File myfile : mydirectory)
-    { 
-    ArrayList<Files> filenames = h.Get_List_Of_Files(myfile);
-    try{
-        if(!f.exists())
-            {  
-//                System.out.println("File Does not exist ");
-                System.out.println("File sheet " + count + " added ");
-                count++;
-               WritableWorkbook workbook   = null; 
-               h.createSheet(workbook, f);
-            }
-            else          
-            { 
-//                System.out.println("File already found ");
-                System.out.println("File sheet " + count + " added ");
-                count++;
-                Workbook workbook = Workbook.getWorkbook(f);
-                h.addsheet(workbook,f);
-                workbook.close();
-            }
-        
-    }
-    catch (IOException | WriteException | BiffException ex) {
-       Logger.getLogger(MainUI.class.getName()).log(Level.SEVERE, null, ex);
-       JOptionPane.showMessageDialog(rootPane," File is already opened or File cannot be created");
-    }
-       
-    } 
-       
-            Metric m = new Metric();
-            try {
-                m.addCho(f);
-                m.addFchAndLch(f);
-                m.addWchAndWCD(f);
-                m.addAcdfAndATAF(f);
-                m.addCP(f);
-                
-                Complete c = new Complete(f);
-                c.setVisible(true);
-                   
-            } catch (IOException | BiffException | WriteException ex) {
-                Logger.getLogger(MainUI.class.getName()).log(Level.SEVERE, null, ex);
-            }
     
+    new Thread(new Runnable() {
+
+            @Override
+            public void run() {
+                Random ran = new Random();
+                int x = ran.nextInt(1000) + 1;
+                File f = new File("C:\\Users\\aryan_000\\Desktop\\output" + x + ".xls");
+                int count = 1;
+                int total_num = mydirectory.length  + 16;
+                System.out.println(total_num);
+                int inc = 100 / total_num;
+                if(inc==0)
+                    inc=1;
+                System.out.println("inc is : " + inc);
+                int num = 0;
+                ProgressBar obj_frame = new ProgressBar();
+                obj_frame.setVisible(true);
+
+                for (File myfile : mydirectory) {
+                    ArrayList<Files> filenames = h.Get_List_Of_Files(myfile);
+                    try {
+                        if (!f.exists()) {
+//                System.out.println("File Does not exist ");
+                            System.out.println("File sheet " + count + " added ");
+                            count++;
+                            WritableWorkbook workbook = null;
+                            h.createSheet(workbook, f);
+
+                            num += inc ;
+                            obj_frame.call(num);
+
+                        } else {
+//                System.out.println("File already found ");
+                            System.out.println("File sheet " + count + " added ");
+                            count++;
+                            Workbook workbook = Workbook.getWorkbook(f);
+                            h.addsheet(workbook, f);
+                            workbook.close();
+                            num += inc ;
+                            obj_frame.call(num);
+                        }
+
+                    } catch (IOException | WriteException | BiffException ex) {
+                        Logger.getLogger(MainUI.class.getName()).log(Level.SEVERE, null, ex);
+                        JOptionPane.showMessageDialog(rootPane, " File is already opened or File cannot be created");
+                    }
+
+                }
+                
+                inc = (100-num)/16;
+                num = 100 - inc*16;
+                obj_frame.call(num);
+                
+                System.out.println("inc is : " + inc  + "and " + (100- inc*4));
+                System.out.println("num is ; " + num);
+                Metric m = new Metric();
+                try {
+
+                    m.addCho(f);// cho and chd
+                        num += inc * 2;
+                        obj_frame.call(num);
+                    m.addFchAndLch(f); //fch lch  frch csd csbs lca lcd
+                        num += inc * 7;
+                        obj_frame.call(num);
+                    m.addWchAndWCD(f); // wch and wcd
+                        num += inc * 2;
+                        obj_frame.call(num);
+                    m.addAcdfAndATAF(f); // ACDF and ATAF and WFR and ICP
+                        num += inc * 4;
+                        obj_frame.call(num);
+                    m.addCP(f);// cp
+                        num += inc;
+                        obj_frame.call(num);
+                    
+                    obj_frame.dispose();
+                    Complete c = new Complete(f);
+                   
+                    c.setVisible(true);
+
+                } catch (IOException | BiffException | WriteException ex) {
+                    Logger.getLogger(MainUI.class.getName()).log(Level.SEVERE, null, ex);
+                }
+ 
+            }
+        }).start();
+    
+        
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        
+        XlstoCsv c = new XlstoCsv();
+        c.setVisible(true);
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -279,6 +337,7 @@ public class MainUI extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
