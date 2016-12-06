@@ -74,7 +74,7 @@ public class MainUI extends javax.swing.JFrame {
             }
         });
 
-        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/changeprone1/research.jpeg"))); // NOI18N
+        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/research.jpeg"))); // NOI18N
         jLabel4.setText("jLabel4");
 
         jButton2.setText("CSV  Converter");
@@ -116,7 +116,7 @@ public class MainUI extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, 227, Short.MAX_VALUE)
+                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
@@ -196,27 +196,16 @@ public class MainUI extends javax.swing.JFrame {
        
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
-        Helper h = new Helper();
-    File[] mydirectory = h.Upload_All();
-    if(mydirectory==null)
-    {   JOptionPane.showMessageDialog(rootPane,"No Folder has been Selected");
-        return ;
-    }
-    
-    new Thread(new Runnable() {
+    protected  void generate( File [] mydirectory , String proj_name , Helper h)
+    {
+        new Thread(new Runnable() {
 
-            @Override
             public void run() {
                 Random ran = new Random();
-                int x = ran.nextInt(1000) + 1;
-                
-                 ProgressBar1 pb = new ProgressBar1();
+                int x1 = ran.nextInt(1000) + 1;
+                ProgressBar1 pb = new ProgressBar1();
                 pb.setVisible(true);
-                File f = new File("C:\\Users\\aryan_000\\Desktop\\output" + x + ".xls");
-                
-                
+                File f = new File("C:\\Users\\aryan_000\\Desktop\\" + proj_name + x1 + ".xls");
                 int count = 1;
                 int total_num = mydirectory.length  + 16;
                 System.out.println(total_num);
@@ -227,7 +216,6 @@ public class MainUI extends javax.swing.JFrame {
                 int num = 0;
 //                ProgressBar obj_frame = new ProgressBar();
 //                obj_frame.setVisible(true);
-
                 for (File myfile : mydirectory) {
                     ArrayList<Files> filenames = h.Get_List_Of_Files(myfile);
                     try {
@@ -237,7 +225,7 @@ public class MainUI extends javax.swing.JFrame {
                             
                             WritableWorkbook workbook = null;
                             h.createSheet(workbook, f);
-
+                            
                             num += inc ;
                             pb.set("File sheet " + count + " added ", num);
                             count++;
@@ -254,57 +242,74 @@ public class MainUI extends javax.swing.JFrame {
                             pb.set("File sheet " + count + " added ", num);
                             count++;
                         }
-
+                        
                     } catch (IOException | WriteException | BiffException ex) {
                         Logger.getLogger(MainUI.class.getName()).log(Level.SEVERE, null, ex);
                         JOptionPane.showMessageDialog(rootPane, " File is already opened or File cannot be created");
                     }
 
                 }
-                
                 inc = (100-num)/16;
                 num = 100 - inc*16;
 //                obj_frame.call(num);
-                
-                
                 System.out.println("inc is : " + inc  + "and " + (100- inc*4));
                 System.out.println("num is ; " + num);
                 Metric m = new Metric();
                 try {
-
+                    
                     m.addCho(f);// cho and chd
-                        num += inc * 2;
+                    num += inc * 2;
 //                        obj_frame.call(num);
-                        pb.set("CHO and CHD added ", num);
+                    pb.set("CHO and CHD added ", num);
                     m.addFchAndLch(f); //fch lch  frch csd csbs lca lcd
-                        num += inc * 7;
+                    num += inc * 7;
 //                        obj_frame.call(num);
-                        pb.set("FCH LCH FRCH CSD CSBS LCA LCD", num);
+                    pb.set("FCH LCH FRCH CSD CSBS LCA LCD", num);
                     m.addWchAndWCD(f); // wch and wcd
-                        num += inc * 2;
+                    num += inc * 2;
 //                        obj_frame.call(num);
-                        pb.set("WCH and WCD added ", num);
+                    pb.set("WCH and WCD added ", num);
                     m.addAcdfAndATAF(f); // ACDF and ATAF and WFR and ICP
-                        num += inc * 4;
+                    num += inc * 4;
 //                        obj_frame.call(num);
-                        pb.set("ACDF AND ATAF added ", num);
+                    pb.set("ACDF AND ATAF added ", num);
                     m.addCP(f);// cp
-                        num += inc;
+                    num += inc;
 //                        obj_frame.call(num);
-                        pb.set("CP added ", num);
+                    pb.set("CP added ", num);
                     
 //                    obj_frame.dispose();
-                     pb.setVisible(false);
+                    pb.setVisible(false);
                     Complete c = new Complete(f);
-                   
+                    
                     c.setVisible(true);
-
+                    
                 } catch (IOException | BiffException | WriteException ex) {
                     Logger.getLogger(MainUI.class.getName()).log(Level.SEVERE, null, ex);
                 }
- 
             }
         }).start();
+    }
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+        Helper h = new Helper();
+    File[] mydirectory = h.Upload_All();
+    if(mydirectory==null)
+    {   JOptionPane.showMessageDialog(rootPane,"No Folder has been Selected");
+        return ;
+    }
+    
+    String proj_name = mydirectory[0].getName();
+    new Thread(new Runnable() {
+
+            @Override
+            public void run() {
+                jLabel3.setText(mydirectory[0].getParent());
+                
+                }
+        }).start();
+    
+    generate(mydirectory , proj_name , h);
     
         
     }//GEN-LAST:event_jButton3ActionPerformed

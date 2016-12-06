@@ -86,7 +86,7 @@ public class Complete extends javax.swing.JFrame {
             }
         });
 
-        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/changeprone1/todo_good.jpg"))); // NOI18N
+        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/todo_good.jpg"))); // NOI18N
         jLabel5.setText("jLabel5");
 
         jLabel6.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
