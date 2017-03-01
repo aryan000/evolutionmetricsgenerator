@@ -71,7 +71,7 @@ public class MainUI extends javax.swing.JFrame {
         heading.setText("Evolution Metric Calculator");
 
         select_label.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        select_label.setText("Select Upload All to Select All Folder  : ");
+        select_label.setText("Click Upload All to Select All Folder  : ");
 
         Upload_button.setText("Upload All");
         Upload_button.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));

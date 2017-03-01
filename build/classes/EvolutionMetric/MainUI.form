@@ -112,7 +112,7 @@
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Tahoma" size="11" style="1"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="Select Upload All to Select All Folder  : "/>
+        <Property name="text" type="java.lang.String" value="Click Upload All to Select All Folder  : "/>
       </Properties>
     </Component>
     <Component class="javax.swing.JButton" name="Upload_button">

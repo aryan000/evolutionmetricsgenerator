@@ -78,10 +78,10 @@ public File[] Upload_All()
             myfolder = null;
             }
     }
-    if(myfolder!=null)
-    {
-        JOptionPane.showMessageDialog(null,"The current choosen file directory is : " + myfolder[0].getParent());
-    } 
+//    if(myfolder!=null)
+//    {
+//        JOptionPane.showMessageDialog(null,"The current choosen file directory is : " + myfolder[0].getParent());
+//    } 
     return myfolder;
 } 
 
