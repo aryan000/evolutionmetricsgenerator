@@ -6,6 +6,7 @@
 package EvolutionMetric;
 
 
+import cNk.UnderstandHelper;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -291,6 +292,15 @@ public class MainUI extends javax.swing.JFrame {
             }
         }).start();
     }
+    
+    private void generate_cnk(File [] mydirectory)
+    {
+        for(File cnkfile : mydirectory)
+        {
+            UnderstandHelper h = new UnderstandHelper(cnkfile);
+            h.execute();
+        }
+    }
     private void Upload_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Upload_buttonActionPerformed
         // TODO add your handling code here:
         JOptionPane.showMessageDialog(null,"Please Select all the folders corresponding to the versions !!!");
@@ -308,6 +318,7 @@ public class MainUI extends javax.swing.JFrame {
                     }
             }).start();
     generate(mydirectory , proj_name , h);
+    generate_cnk(mydirectory);
     }//GEN-LAST:event_Upload_buttonActionPerformed
 
     private void csv_convert_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_csv_convert_buttonActionPerformed
