@@ -184,7 +184,6 @@ public class GenerateReport extends javax.swing.JFrame {
         filter.setSearch(search);
         filter.setInputFormat(data);
         Instances newData = Filter.useFilter(data, filter);
-
         return newData;
     }
     

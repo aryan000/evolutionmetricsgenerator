@@ -49,10 +49,11 @@ public class XlstoCsv extends javax.swing.JFrame {
            Sheet sheet = workbook.getSheet(version);
            for(int row =0;row <sheet.getRows();row++)
             {
-              for(int col =1;col <sheet.getColumns();col++)
+              for(int col =0;col <sheet.getColumns();col++)
                {
                   Cell cell = sheet.getCell(col, row);
                   String temp = cell.getContents();
+//                   System.out.println(temp);
                   data.append(temp);
                   if(col+1!= sheet.getColumns())
                     data.append(",");
@@ -104,6 +105,32 @@ public class XlstoCsv extends javax.swing.JFrame {
         }
     }
     
+     public void convert_explicit(File f , String userPath )
+    {
+        try{
+              Workbook workbook = Workbook.getWorkbook(f);
+              int num_of_sheet = workbook.getNumberOfSheets();
+              
+                for(int i =0; i<num_of_sheet; i++)
+                {   
+                    File outputFile = null;
+                    if(i+1<10)
+                        outputFile = new File(new File(userPath).getAbsolutePath() + "\\version0" + (i+1) + ".csv");
+                    else
+                         outputFile = new File(new File(userPath).getAbsolutePath() + "\\version" + (i+1) + ".csv");
+                    exceltocsv(f,i,outputFile);
+                } 
+                
+                System.out.println("completed here excel conversion");
+                CompleteCsv c = new CompleteCsv(new File(userPath));
+                c.setVisible(true);
+                System.out.println("Completed");
+        }
+         catch (IOException | BiffException  ex) {
+            Logger.getLogger(XlstoCsv.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null,"File Cannot be opened");
+        }
+    }
     
     
     /**

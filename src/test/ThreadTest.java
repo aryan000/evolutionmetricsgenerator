@@ -29,7 +29,7 @@ public class ThreadTest  extends Thread {
          for(int i = 0 ; i<5;i++)
              System.out.println( i + this.getName());
     } 
-    public static void main(String s[])
+    public static void main(String a[])
     {
 //        Thread a = new ThreadTest();
 //        Thread b = new ThreadTest();
