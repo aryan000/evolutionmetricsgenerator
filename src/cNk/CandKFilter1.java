@@ -202,26 +202,19 @@ public class CandKFilter1 extends javax.swing.JFrame {
             BufferedReader br = new BufferedReader(fr);
             String st ;
             int i = 0;
-            try {
+            try { 
+                              
                 while ((st = br.readLine()) != null) 
                 {
 //                    System.out.println(st);
                     if(i==0)
-                    {  int temp = 0;
-                        for (String retval: st.split(","))
-                        {
-                            if(temp==0 || temp==1)
-                               temp++;
-                            else CSVFile.metric_names.add(retval);
-//                            System.out.println(retval + " this is adding");
-                            
-                        }
-                        i++;
-                    } 
-                    else
                     {
-                    CSVFile t = new CSVFile(st);
-                    data.add(t);
+                    CSVFile t = new CSVFile(st); 
+                    i++;
+                    }
+                    else
+                    {CSVFile t = new CSVFile(st);
+                     data.add(t);
                     }
                 }
             } catch (IOException ex) {
@@ -260,7 +253,7 @@ public class CandKFilter1 extends javax.swing.JFrame {
       
        
       String    pattern = jfile.substring(0,jfile.lastIndexOf("."));
-      
+      candkfile = candkfile.replaceAll("^\"|\"$", "");
       Boolean result =  candkfile.matches(".*.\\."+pattern);
       
 //      System.out.println( jfile + " and " + candkfile + result );
@@ -281,14 +274,9 @@ public class CandKFilter1 extends javax.swing.JFrame {
         for(int i = 0; i < CSVFile.metric_names.size() ; i++)
         {    
             String col_name =  CSVFile.metric_names.get(i);
-            System.out.println("col name is : " + col_name);
+//            System.out.println("col name is : " + col_name);
             sheet.addCell(new Label ( column++ ,row,col_name));
         }
-//        sheet.addCell(new Label ( column++ ,row,"COl1"));
-//        sheet.addCell(new Label ( column++ ,row,"COl2"));
-//        sheet.addCell(new Label ( column++ ,row,"COl3"));
-//        sheet.addCell(new Label ( column++ ,row,"COl4"));
-//        sheet.addCell(new Label ( column++ ,row,"COl5"));
         
         row++;
         column=0; 
@@ -298,7 +286,7 @@ public class CandKFilter1 extends javax.swing.JFrame {
         {
             CSVFile temp = candkdata.get(key);
             sheet.addCell(new Label ( column++ ,row,key));
-            sheet.addCell(new Label(column++ , row , temp.name));
+            sheet.addCell(new Label(column++ , row , temp.name.replaceAll("^\"|\"$", "")));
             
         
           for (int i=0;i<temp.metric.size();i++) {
@@ -307,7 +295,7 @@ public class CandKFilter1 extends javax.swing.JFrame {
           } 
           row++;
           column = 0;
-            System.out.println( key  + "    " + temp.name);
+//            System.out.println( key  + "    " + temp.name);
             
          }
         
@@ -409,6 +397,7 @@ public class CandKFilter1 extends javax.swing.JFrame {
 //         for(CSVFile cs : data)
 //             System.out.println(cs.kind + cs.metric.toString() );
         System.out.println("received data of csv : " + data.size());
+        
         int version = 0;
         version  =  Integer.parseInt(version_no.getText());
         ArrayList<String> javafiles = getjavafiles(new File(project_file_label.getText()),version );
@@ -417,29 +406,33 @@ public class CandKFilter1 extends javax.swing.JFrame {
         
         HashMap<String, CSVFile> candkdata = new HashMap<>();
         
-        String candkfilename;
+        String candkfilename; 
+        int start = 0;
         for(String filename : javafiles)
         {
             for(CSVFile data1 : data)
-            {
+            {   
+                if(start==0)
+                { start++; continue;}
+                 
                 candkfilename = data1.name;
                 
                 if(ismatch(filename,candkfilename))
                 {
                     candkdata.put(filename,data1);
-                    System.out.println( filename + " and " + candkfilename +  " match found");
+//                    System.out.println( filename + " and " + candkfilename +  " match found");
                     break;
                 }
                 else
                 {
-                    System.out.println( filename + " and " + candkfilename +  " no match found");
+//                    System.out.println( filename + " and " + candkfilename +  " no match found");
                 }
             }
         }
         
         try {
             buildcsv(candkdata);
-            showtable(candkdata);
+           // showtable(candkdata);
         } catch (IOException | WriteException ex) {
             Logger.getLogger(CandKFilter1.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(rootPane, "Some Error Occurred. Cannot write data to csv. \n Try Later");

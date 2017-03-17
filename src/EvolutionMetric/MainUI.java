@@ -295,11 +295,18 @@ public class MainUI extends javax.swing.JFrame {
     
     private void generate_cnk(File [] mydirectory)
     {
-        for(File cnkfile : mydirectory)
-        {
-            UnderstandHelper h = new UnderstandHelper(cnkfile);
-            h.execute();
-        }
+       new Thread(new Runnable() {
+
+           @Override
+           public void run() {
+               for (File cnkfile : mydirectory) {
+                   UnderstandHelper h = new UnderstandHelper(cnkfile);
+                   h.execute();
+               }
+               throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+           }
+       }).start();
+        
     }
     private void Upload_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Upload_buttonActionPerformed
         // TODO add your handling code here:

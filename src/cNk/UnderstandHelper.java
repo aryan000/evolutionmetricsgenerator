@@ -37,7 +37,7 @@ public class UnderstandHelper
         command += "add " + project.getPath();
         command += " settings -metrics CountDeclMethod MaxInheritanceTree CountClassDerived CountClassCoupled CountDeclMethodAll PercentLackOfCohesion";
         command += " -metricsOutputFile " + path + folder_name + ".csv";
-        command += " analyze metrics quit";
+        command += " analyze metrics ";
         
         
         System.out.println(command);
@@ -62,4 +62,10 @@ public class UnderstandHelper
         
     }
     
+    
+    public static void main(String s[])
+    {
+        UnderstandHelper h = new UnderstandHelper(new File("C:\\Users\\aryan_000\\Desktop\\software\\retrofit\\retrofit-parent-1.2.2"));
+        h.execute();
+    }
 }
