@@ -6,7 +6,7 @@
 package EvolutionMetric;
 
 
-import cNk.UnderstandHelper;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -52,17 +52,22 @@ public class MainUI extends javax.swing.JFrame {
     private void initComponents() {
 
         heading = new javax.swing.JLabel();
+        icon = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
         select_label = new javax.swing.JLabel();
         Upload_button = new javax.swing.JButton();
-        icon = new javax.swing.JLabel();
-        csv_convert_button = new javax.swing.JButton();
-        gen_report_button = new javax.swing.JButton();
-        weka_analysis_button = new javax.swing.JButton();
-        about_button = new javax.swing.JButton();
         select_label1 = new javax.swing.JLabel();
+        gen_report_button = new javax.swing.JButton();
         select_label2 = new javax.swing.JLabel();
+        csv_convert_button = new javax.swing.JButton();
         select_label3 = new javax.swing.JLabel();
+        weka_analysis_button = new javax.swing.JButton();
         select_label4 = new javax.swing.JLabel();
+        about_button = new javax.swing.JButton();
+        select_label5 = new javax.swing.JLabel();
+        Upload_button1 = new javax.swing.JButton();
+        select_label6 = new javax.swing.JLabel();
+        Upload_button2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Evalution Metric Calculator");
@@ -71,10 +76,13 @@ public class MainUI extends javax.swing.JFrame {
         heading.setForeground(new java.awt.Color(51, 51, 255));
         heading.setText("Evolution Metric Calculator");
 
-        select_label.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        select_label.setText("Click Upload All to Select All Folder  : ");
+        icon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/research.jpeg"))); // NOI18N
+        icon.setText("jLabel4");
 
-        Upload_button.setText("Upload All");
+        select_label.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        select_label.setText("Click to Generate Evolution Metrics  : ");
+
+        Upload_button.setText("Generate Evolution Metrics ");
         Upload_button.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         Upload_button.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -82,16 +90,8 @@ public class MainUI extends javax.swing.JFrame {
             }
         });
 
-        icon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/research.jpeg"))); // NOI18N
-        icon.setText("jLabel4");
-
-        csv_convert_button.setText("CSV  Converter");
-        csv_convert_button.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        csv_convert_button.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                csv_convert_buttonActionPerformed(evt);
-            }
-        });
+        select_label1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        select_label1.setText("Click to Generate Report : ");
 
         gen_report_button.setText("Generate Report");
         gen_report_button.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -101,6 +101,20 @@ public class MainUI extends javax.swing.JFrame {
             }
         });
 
+        select_label2.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        select_label2.setText("Click to Convert Excel Sheet to CSV : ");
+
+        csv_convert_button.setText("CSV  Converter");
+        csv_convert_button.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        csv_convert_button.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                csv_convert_buttonActionPerformed(evt);
+            }
+        });
+
+        select_label3.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        select_label3.setText("Perform Analysis Using Weka : ");
+
         weka_analysis_button.setText("Analyse using Weka");
         weka_analysis_button.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         weka_analysis_button.addActionListener(new java.awt.event.ActionListener() {
@@ -108,6 +122,9 @@ public class MainUI extends javax.swing.JFrame {
                 weka_analysis_buttonActionPerformed(evt);
             }
         });
+
+        select_label4.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        select_label4.setText("About Software Metrics : ");
 
         about_button.setText("About");
         about_button.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -117,17 +134,98 @@ public class MainUI extends javax.swing.JFrame {
             }
         });
 
-        select_label1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        select_label1.setText("Click to Generate Report : ");
+        select_label5.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        select_label5.setText("Click to Generate C and K Metrics : ");
 
-        select_label2.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        select_label2.setText("Click to Convert Excel Sheet to CSV : ");
+        Upload_button1.setText("Generate C and K Metrics");
+        Upload_button1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        Upload_button1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Upload_button1ActionPerformed(evt);
+            }
+        });
 
-        select_label3.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        select_label3.setText("Perform Analysis Using Weka : ");
+        select_label6.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        select_label6.setText("Click to Process Evolution + C and K");
 
-        select_label4.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        select_label4.setText("About Software Metrics : ");
+        Upload_button2.setText("Generate All");
+        Upload_button2.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        Upload_button2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Upload_button2ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(select_label4, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(about_button, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(select_label1, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(gen_report_button, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(select_label3, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(weka_analysis_button, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(select_label2, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(csv_convert_button, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(select_label5, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(Upload_button1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(select_label, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(Upload_button, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(select_label6, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(Upload_button2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addContainerGap())
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(select_label, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Upload_button, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(select_label5, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Upload_button1, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(select_label6, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Upload_button2, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(select_label2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(csv_convert_button, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(11, 11, 11)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(select_label3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(weka_analysis_button, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(select_label1, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(gen_report_button, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(about_button)
+                    .addComponent(select_label4, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -140,23 +238,11 @@ public class MainUI extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(select_label, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(select_label1, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(select_label2, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(select_label3, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(select_label4, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(weka_analysis_button, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(about_button, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(csv_convert_button, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(gen_report_button, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(Upload_button, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(layout.createSequentialGroup()
                         .addGap(84, 84, 84)
-                        .addComponent(icon, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(icon, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -166,32 +252,16 @@ public class MainUI extends javax.swing.JFrame {
                 .addComponent(heading, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(icon, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(select_label, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(Upload_button, javax.swing.GroupLayout.DEFAULT_SIZE, 25, Short.MAX_VALUE))
-                .addGap(4, 4, 4)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(gen_report_button, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(select_label1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(csv_convert_button, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(select_label2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(weka_analysis_button, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(select_label3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(about_button, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(select_label4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+     private String project_name = "";
+    private String userPath = "";
+    private int version = 0;
     public void Reset()
     {
         Boc.bocMap.clear();
@@ -211,11 +281,11 @@ public class MainUI extends javax.swing.JFrame {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                Random ran = new Random();
-                int x1 = ran.nextInt(1000) + 1;
+//                Random ran = new Random();
+//                int x1 = ran.nextInt(1000) + 1;
                 ProgressBar1 pb = new ProgressBar1();
                 pb.setVisible(true);
-                File f = new File("C:\\Users\\aryan_000\\Desktop\\" + proj_name + x1 + ".xls");
+                File f = new File(userPath  +"/"+ project_name + ".xls");
                 int count = 1;
                 int total_num = mydirectory.length  + 16;
                 System.out.println(total_num);
@@ -299,34 +369,87 @@ public class MainUI extends javax.swing.JFrame {
 
            @Override
            public void run() {
+                   int i = 0; 
+               String filename = "cnk_version";
+               
                for (File cnkfile : mydirectory) {
-                   UnderstandHelper h = new UnderstandHelper(cnkfile);
-                   h.execute();
+                   
+                   if(i+1<10)
+                   {
+                       UnderstandHelper h = new UnderstandHelper(cnkfile , userPath , filename +"0" + (i+1));
+                         h.execute();
+                   }
+                   else 
+                   {  UnderstandHelper h = new UnderstandHelper(cnkfile , userPath , filename + (i+1));
+                     h.execute();
+                   }
+                   
+                   i++;
+               
                }
-               throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+//               throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
            }
        }).start();
         
     }
     
+     private Boolean validate_project_name(String proj_name)
+    {
+        if( proj_name==null || proj_name.isEmpty() )
+        { JOptionPane.showMessageDialog(null,"Project name is invalid.. \n Please try again"); return false; }
+        
+        else
+        {
+        String userDir = System.getProperty("user.home");
+        userDir   = userDir + "/Desktop/" + proj_name;
+        
+            System.out.println(userDir);
+         Boolean check = new File(userDir).mkdir();
+         
+         if(!check)
+         { JOptionPane.showMessageDialog(null,"Folder Name already exists"); return false; }
+         else
+         {   
+             userPath = userDir;
+             return true;
+         }   
+         }
+        
+        
+        
+             
+    }
     private void Upload_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Upload_buttonActionPerformed
-        // TODO add your handling code here:
+        // TODO add your handling code here: 
+        
+         project_name =  JOptionPane.showInputDialog(null, "Please Enter the name of your project :");
+       
+       Boolean check = validate_project_name(project_name);
+       if(!check)
+       { System.out.println("Folder not Created"); return ;}
+       
+        System.out.println("project name is :  "  + project_name);
         JOptionPane.showMessageDialog(null,"Please Select all the folders corresponding to the versions !!!");
         Helper h = new Helper();
         File[] mydirectory = h.Upload_All();
+        version = mydirectory.length;
         if(mydirectory==null)
         {   JOptionPane.showMessageDialog(rootPane,"No Folder has been Selected");
             return ;
         }
+        
+        
         String proj_name = mydirectory[0].getName();
-        new Thread(new Runnable() {
+       Thread T1 =  new Thread(new Runnable() {
                 @Override
                 public void run() {
                     select_label.setText(mydirectory[0].getParent());
                     }
-            }).start();
-    generate(mydirectory , proj_name , h);
-    generate_cnk(mydirectory);
+            }); 
+       
+       T1.start();
+        generate(mydirectory , proj_name , h);
+//         generate_cnk(mydirectory);
     }//GEN-LAST:event_Upload_buttonActionPerformed
 
     private void csv_convert_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_csv_convert_buttonActionPerformed
@@ -353,6 +476,45 @@ public class MainUI extends javax.swing.JFrame {
         About a = new About();
         a.setVisible(true);
     }//GEN-LAST:event_about_buttonActionPerformed
+
+    private void Upload_button1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Upload_button1ActionPerformed
+        // TODO add your handling code here:
+         project_name =  JOptionPane.showInputDialog(null, "Please Enter the name of your project :");
+       
+       Boolean check = validate_project_name(project_name);
+       if(!check)
+       { System.out.println("Folder not Created"); return ;}
+       
+        System.out.println("project name is :  "  + project_name);
+        JOptionPane.showMessageDialog(null,"Please Select all the folders corresponding to the versions !!!");
+        Helper h = new Helper();
+        File[] mydirectory = h.Upload_All();
+        version = mydirectory.length;
+        if(mydirectory==null)
+        {   JOptionPane.showMessageDialog(rootPane,"No Folder has been Selected");
+            return ;
+        }
+        
+        
+        String proj_name = mydirectory[0].getName();
+       Thread T1 =  new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    select_label.setText(mydirectory[0].getParent());
+                    }
+            }); 
+       
+       T1.start();
+//        generate(mydirectory , proj_name , h);
+         generate_cnk(mydirectory);
+    }//GEN-LAST:event_Upload_button1ActionPerformed
+
+    private void Upload_button2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Upload_button2ActionPerformed
+        // TODO add your handling code here:
+        Generate_Full_Report gfr = new Generate_Full_Report();
+        gfr.start();
+        
+    }//GEN-LAST:event_Upload_button2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -391,16 +553,21 @@ public class MainUI extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Upload_button;
+    private javax.swing.JButton Upload_button1;
+    private javax.swing.JButton Upload_button2;
     private javax.swing.JButton about_button;
     private javax.swing.JButton csv_convert_button;
     private javax.swing.JButton gen_report_button;
     private javax.swing.JLabel heading;
     private javax.swing.JLabel icon;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel select_label;
     private javax.swing.JLabel select_label1;
     private javax.swing.JLabel select_label2;
     private javax.swing.JLabel select_label3;
     private javax.swing.JLabel select_label4;
+    private javax.swing.JLabel select_label5;
+    private javax.swing.JLabel select_label6;
     private javax.swing.JButton weka_analysis_button;
     // End of variables declaration//GEN-END:variables
 }

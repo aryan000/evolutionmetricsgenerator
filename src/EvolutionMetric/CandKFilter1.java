@@ -464,7 +464,7 @@ public class CandKFilter1 extends javax.swing.JFrame {
         ArrayList<CSVFile> data = null  ;  
         data = getcsv(candkfile); 
         
-        System.out.println("data from csv is received : " + data.size());
+//        System.out.println("data from csv is received : " + data.size());
 //        ArrayList<String> javafiles = new ArrayList<>();
         FileReader fr = null;
         
@@ -484,7 +484,8 @@ public class CandKFilter1 extends javax.swing.JFrame {
             Boolean flag ;
             while ((st = br.readLine()) != null) // for every line of project file
             {    
-                System.out.println("line reading is : " + st); flag = false;
+//                System.out.println("line reading is : " + st);
+                flag = false;
                 if(project_file_ptr==0)
                 {   
 //                    System.out.println("THis is first line in file ");

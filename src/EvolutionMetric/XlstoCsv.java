@@ -122,9 +122,9 @@ public class XlstoCsv extends javax.swing.JFrame {
                 } 
                 
                 System.out.println("completed here excel conversion");
-                CompleteCsv c = new CompleteCsv(new File(userPath));
-                c.setVisible(true);
-                System.out.println("Completed");
+//                CompleteCsv c = new CompleteCsv(new File(userPath));
+//                c.setVisible(true);
+//                System.out.println("Completed");
         }
          catch (IOException | BiffException  ex) {
             Logger.getLogger(XlstoCsv.class.getName()).log(Level.SEVERE, null, ex);

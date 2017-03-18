@@ -25,6 +25,10 @@ public class UnderstandHelper
     {
         this.project = project;
     }
+
+    public UnderstandHelper(File cnkfile, String userPath, String string) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
     public void execute()
     {

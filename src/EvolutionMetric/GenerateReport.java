@@ -303,9 +303,12 @@ public class GenerateReport extends javax.swing.JFrame {
             try {
                 source = new ConverterUtils.DataSource(fname);
                 Instances data = source.getDataSet();
-                if (data.classIndex() == -1)
+                if (data.classIndex() == -1)  
+                    /* setClassIndex is used to define the attribute that will represent the class 
+                    (for prediction purposes).   Given that the index starts at zero, 
+                    data.numAttributes() - 1 represents the last attribute of the testdata set. */
                 data.setClassIndex(data.numAttributes() - 1);
-
+                    
                 Remove r = new Remove();
                 r.setAttributeIndices("18");
                 r.setInvertSelection(false);
@@ -482,8 +485,6 @@ public class GenerateReport extends javax.swing.JFrame {
                 if(r.wfr)
                     data.append(",YES");
                 else data.append(",");
-                
-                
                 
                 if(r.cp)
                     data.append(",YES");

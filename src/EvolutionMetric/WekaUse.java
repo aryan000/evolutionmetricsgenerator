@@ -24,6 +24,7 @@ import weka.core.Instances;
 import weka.core.converters.ConverterUtils;
 import weka.filters.Filter;
 import weka.filters.unsupervised.attribute.Remove;
+import weka.filters.unsupervised.attribute.Reorder;
 
 /**
  *
@@ -59,13 +60,18 @@ public class WekaUse extends javax.swing.JFrame {
         attribute_area = new javax.swing.JScrollPane();
         attribute_table = new javax.swing.JTable();
         attr_selector = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
         logistic_regr = new javax.swing.JButton();
         roc_panel = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         roc_textarea = new javax.swing.JTextArea();
         roc_label = new javax.swing.JLabel();
+        jButton5 = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         heading.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         heading.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -130,24 +136,60 @@ public class WekaUse extends javax.swing.JFrame {
             }
         });
 
+        jButton1.setText("Model 1");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        jButton2.setText("Model 2");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
+        jButton3.setText("Model 3");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+
+        jButton4.setText("Model 4");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout attributes_panelLayout = new javax.swing.GroupLayout(attributes_panel);
         attributes_panel.setLayout(attributes_panelLayout);
         attributes_panelLayout.setHorizontalGroup(
             attributes_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(attributes_panelLayout.createSequentialGroup()
                 .addGroup(attributes_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(attribute_area, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addGroup(attributes_panelLayout.createSequentialGroup()
                         .addGap(82, 82, 82)
                         .addComponent(attribute_label, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(attribute_area, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                    .addGroup(attributes_panelLayout.createSequentialGroup()
+                        .addComponent(remove_attribute_button)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(attr_selector, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap())
             .addGroup(attributes_panelLayout.createSequentialGroup()
-                .addGap(53, 53, 53)
-                .addGroup(attributes_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(attr_selector, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(remove_attribute_button))
-                .addContainerGap(95, Short.MAX_VALUE))
+                .addContainerGap()
+                .addComponent(jButton1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton3)
+                .addGap(18, 18, 18)
+                .addComponent(jButton4)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         attributes_panelLayout.setVerticalGroup(
             attributes_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -156,11 +198,16 @@ public class WekaUse extends javax.swing.JFrame {
                 .addComponent(attribute_label, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(4, 4, 4)
                 .addComponent(attribute_area, javax.swing.GroupLayout.PREFERRED_SIZE, 257, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(remove_attribute_button, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(attr_selector, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(12, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(attributes_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton1)
+                    .addComponent(jButton2)
+                    .addComponent(jButton3)
+                    .addComponent(jButton4))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
+                .addGroup(attributes_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(attr_selector, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(remove_attribute_button, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
 
         logistic_regr.setText(" Apply Logistic Regression");
@@ -187,18 +234,26 @@ public class WekaUse extends javax.swing.JFrame {
                         .addContainerGap()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 712, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(roc_panelLayout.createSequentialGroup()
-                        .addGap(255, 255, 255)
+                        .addGap(257, 257, 257)
                         .addComponent(roc_label, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         roc_panelLayout.setVerticalGroup(
             roc_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, roc_panelLayout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(6, 6, 6)
                 .addComponent(roc_label, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
+                .addContainerGap())
         );
+
+        jButton5.setText("Reset");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -209,7 +264,9 @@ public class WekaUse extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(attributes_panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(270, 270, 270)
+                        .addGap(67, 67, 67)
+                        .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(112, 112, 112)
                         .addComponent(logistic_regr)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
@@ -245,7 +302,9 @@ public class WekaUse extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                         .addComponent(roc_panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(logistic_regr, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(logistic_regr, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(attributes_panel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -348,7 +407,36 @@ public class WekaUse extends javax.swing.JFrame {
         
         set_roc_textarea(evaluation);
         
-    }
+    } 
+      public Instances put_cp_to_last(Instances data)
+   {
+         try {
+             String range = "first";
+             int cp_index = 0 ;
+             for(int i =2;i<=data.numAttributes();i++)
+             {
+                 if(data.attribute(i-1).name().equals("CP"))
+                 {cp_index = i; System.out.println(data.attribute(i).name());
+                 System.out.println(i);
+                 continue;
+                 }
+                 else if(!range.equals(""))
+                     range+= ",";
+                 range +=  i;
+             }
+             range +=","+ cp_index; 
+             Reorder r = new Reorder();
+             r.setAttributeIndices(range);
+             r.setInputFormat(data);
+             data = Filter.useFilter(data, r);
+         } catch (Exception ex) {
+             Logger.getLogger(GenerateModel.class.getName()).log(Level.SEVERE, null, ex);
+         }
+         
+         
+         return data;
+             
+   }
     private void load_fileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_load_fileActionPerformed
         
         String path = filepath.getText();
@@ -368,6 +456,7 @@ public class WekaUse extends javax.swing.JFrame {
             if (data.classIndex() == -1)
                 data.setClassIndex(data.numAttributes() - 1);
              
+            data = put_cp_to_last(data);
             set(data,true);
 //            System.out.println("data is : " + data);
         } catch (Exception ex) {
@@ -481,6 +570,177 @@ public class WekaUse extends javax.swing.JFrame {
         
     }//GEN-LAST:event_logistic_regrActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here: 
+        String attr = "";
+        String attribute ;
+        String temp = "";
+        for(int i =1;i<data.numAttributes()+1;i++)
+        {
+             attribute = data.attribute(i-1).name();
+             if(attribute.matches("Filename") || attribute.startsWith("File") || attribute.equals("WMC") || attribute.equals("DIT")
+                     || attribute.equals("NOC") || attribute.equals("CBO") || attribute.equals("RFC") || attribute.equals("LCOM") || attribute.equals("ICP")
+                     )
+             {
+                 if(!attr.equals(""))
+                     attr += ",";
+                 attr += i ;
+//                 System.out.println(attribute);
+             }
+                 
+        } 
+//                System.out.println(attr);
+                Remove r = new Remove();
+                r.setAttributeIndices(attr);
+                r.setInvertSelection(false);
+                try {
+                    r.setInputFormat(data);
+                    data = Filter.useFilter(data, r);
+//                    data = useFilter(data); // applying attribute selection
+                } catch (Exception ex) {
+                    Logger.getLogger(GenerateModel.class.getName()).log(Level.SEVERE, null, ex);
+                  }
+        
+                if (data.classIndex() == -1)
+                data.setClassIndex(data.numAttributes() - 1);
+                set(data,true);
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        String attr = "";
+        String attribute ;
+        String temp = "";
+        for(int i =1;i<data.numAttributes()+1;i++)
+        {
+             attribute = data.attribute(i-1).name();
+             if(attribute.matches("Filename") || attribute.startsWith("File") || attribute.equals("LOC") || 
+                     attribute.equals("BOC")  || attribute.equals("TACH")     || attribute.equals("CHO") || 
+                     attribute.equals("CHD")  || attribute.equals("FCH")      || attribute.equals("ICP")  || 
+                     attribute.equals("LCH")  || attribute.equals("FRCH")     || attribute.equals("CSB") || 
+                     attribute.equals("CSBS") || attribute.equals("LCA")      || attribute.equals("LCD") || 
+                     attribute.equals("WCH")  || attribute.equals("WCD")      || attribute.equals("ACDF") || 
+                     attribute.equals("ATAF") || attribute.equals("WFR") )
+             {
+                 if(!attr.equals(""))
+                     attr += ",";
+                 attr += i ;
+//                 System.out.println(attribute);
+             }
+                 
+        } 
+//                System.out.println(attr);
+                Remove r = new Remove();
+                r.setAttributeIndices(attr);
+                r.setInvertSelection(false);
+                try {
+                    r.setInputFormat(data);
+                    data = Filter.useFilter(data, r);
+                } catch (Exception ex) {
+                    Logger.getLogger(GenerateModel.class.getName()).log(Level.SEVERE, null, ex);
+                  }
+                
+        set(data,true);
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+        String attr = "";
+        String attribute ;
+        String temp = "";
+        for(int i =1;i<data.numAttributes()+1;i++)
+        {
+             attribute = data.attribute(i-1).name();
+             if(attribute.matches("Filename") || attribute.startsWith("File") || attribute.equals("ICP"))
+             {
+                 if(!attr.equals(""))
+                     attr += ",";
+                 attr += i ;
+//                 System.out.println(attribute);
+             }
+                 
+        } 
+//                System.out.println(attr);
+                Remove r = new Remove();
+                r.setAttributeIndices(attr);
+                r.setInvertSelection(false);
+                try {
+                    r.setInputFormat(data);
+                    data = Filter.useFilter(data, r);
+                } catch (Exception ex) {
+                    Logger.getLogger(GenerateModel.class.getName()).log(Level.SEVERE, null, ex);
+                  }
+                
+             System.out.println("Model 3 attributes ");
+                for(int i = 0 ; i<data.numAttributes(); i++)
+                    temp += data.attribute(i).name() + ",";
+                
+                System.out.println(temp);
+                 if (data.classIndex() == -1)  
+                    data.setClassIndex(data.numAttributes() - 1);
+                 
+          set(data,true); 
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+        String attr = "";
+        String attribute ;
+        String temp = "";
+        for(int i =1;i<data.numAttributes()+1;i++)
+        {
+             attribute = data.attribute(i-1).name();
+             if(attribute.matches("CP") || attribute.equals("ICP"))
+             {
+                 if(!attr.equals(""))
+                     attr += ",";
+                 attr += i ;
+//                 System.out.println(attribute);
+             }
+                 
+        } 
+//                System.out.println(attr);
+                Remove r = new Remove();
+                r.setAttributeIndices(attr);
+                r.setInvertSelection(true);
+                try {
+                    r.setInputFormat(data);
+                    data = Filter.useFilter(data, r);
+                } catch (Exception ex) {
+                    Logger.getLogger(GenerateModel.class.getName()).log(Level.SEVERE, null, ex);
+                  } 
+                if (data.classIndex() == -1)
+                     data.setClassIndex(data.numAttributes() - 1);
+            set(data,true);
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        // TODO add your handling code here:
+        String path = filepath.getText();
+        
+        if(path.trim()==null || path.trim().isEmpty())
+        {
+            JOptionPane.showMessageDialog(null,"Nothing to Reset");
+            return;
+        }
+        
+        try {
+            // TODO add your handling code here:
+            
+            source = new ConverterUtils.DataSource(path);
+            Instances data = source.getDataSet();
+                        
+             data = put_cp_to_last(data);
+             if (data.classIndex() == -1)
+                data.setClassIndex(data.numAttributes() - 1);
+            set(data,true);
+//            System.out.println("data is : " + data);
+        } catch (Exception ex) {
+            Logger.getLogger(WekaUse.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }//GEN-LAST:event_jButton5ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -524,6 +784,11 @@ public class WekaUse extends javax.swing.JFrame {
     private javax.swing.JPanel attributes_panel;
     private javax.swing.JTextField filepath;
     private javax.swing.JLabel heading;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton load_file;
     private javax.swing.JButton logistic_regr;

@@ -150,7 +150,7 @@ public class Generate_Full_Report extends javax.swing.JFrame {
                    }
                    else 
                    { UnderstandHelper h = new UnderstandHelper(cnkfile , userPath , filename + (i+1));
-                   h.execute();
+                     h.execute();
                    }
                    
                    i++;
@@ -186,11 +186,9 @@ public class Generate_Full_Report extends javax.swing.JFrame {
              
     }
     
-   
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here: 
-        
-       project_name =  JOptionPane.showInputDialog(null, "Please Enter the name of your project :");
+    public void start()
+    {
+        project_name =  JOptionPane.showInputDialog(null, "Please Enter the name of your project :");
        
        Boolean check = validate_project_name(project_name);
        if(!check)
@@ -242,7 +240,6 @@ public class Generate_Full_Report extends javax.swing.JFrame {
                XlstoCsv xl = new XlstoCsv();
                File f = new File(userPath + "/" + project_name + ".xls");
                xl.convert_explicit(f, userPath);
-               
                System.out.println("Excel successfully converted into csv");
            }
        });
@@ -272,10 +269,7 @@ public class Generate_Full_Report extends javax.swing.JFrame {
                    System.out.println(project_file + " and " + candkfile);
                    CSVFile.count = 0;
                    CSVFile.metric_names.clear();
-                  c.merge_candk( project_file,candkfile);
-                  
-                   
-                   
+                   c.merge_candk( project_file,candkfile);
                }
                
                System.out.println("all files merged");
@@ -287,7 +281,9 @@ public class Generate_Full_Report extends javax.swing.JFrame {
 
            @Override
            public void run() {
-               throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+//               throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+               GenerateModel gm = new GenerateModel(userPath,version);
+               gm.generate();
            }
        });
         try { 
@@ -296,12 +292,19 @@ public class Generate_Full_Report extends javax.swing.JFrame {
             T3.start(); // extracting the csv from excel sheet
             T3.join(); // waiting for extraction to be finished
             T4.start(); // merging excel project file and c and k
-            JOptionPane.showMessageDialog(null,"Metrics Populated");
+            System.out.println("Metrics populated");
+            T4.join();
+            T5.start();
         } catch (InterruptedException ex) {
             Logger.getLogger(Generate_Full_Report.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-        
+       
+    }
+   
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here: 
+         start();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
