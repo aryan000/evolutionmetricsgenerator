@@ -359,6 +359,8 @@ public class MainUI extends javax.swing.JFrame {
                 } catch (IOException | BiffException | WriteException ex) {
                     Logger.getLogger(MainUI.class.getName()).log(Level.SEVERE, null, ex);
                 }
+                
+                pb.set_output("Evolution Metrics Added");
             }
         }).start();
     }
@@ -370,10 +372,13 @@ public class MainUI extends javax.swing.JFrame {
            @Override
            public void run() {
                    int i = 0; 
+                ProgressBar1 pb = new ProgressBar1();
+                pb.setVisible(true);
                String filename = "cnk_version";
                
                for (File cnkfile : mydirectory) {
                    
+                   pb.set("CNK File " + (i+1) + " Processing ...",i+5);
                    if(i+1<10)
                    {
                        UnderstandHelper h = new UnderstandHelper(cnkfile , userPath , filename +"0" + (i+1));
@@ -383,7 +388,7 @@ public class MainUI extends javax.swing.JFrame {
                    {  UnderstandHelper h = new UnderstandHelper(cnkfile , userPath , filename + (i+1));
                      h.execute();
                    }
-                   
+                     pb.set("CNK File " + (i+1) + " added",i+10);
                    i++;
                
                }
@@ -440,14 +445,6 @@ public class MainUI extends javax.swing.JFrame {
         
         
         String proj_name = mydirectory[0].getName();
-       Thread T1 =  new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    select_label.setText(mydirectory[0].getParent());
-                    }
-            }); 
-       
-       T1.start();
         generate(mydirectory , proj_name , h);
 //         generate_cnk(mydirectory);
     }//GEN-LAST:event_Upload_buttonActionPerformed

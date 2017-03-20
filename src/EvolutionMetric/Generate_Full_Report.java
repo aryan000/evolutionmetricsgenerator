@@ -32,7 +32,9 @@ public class Generate_Full_Report extends javax.swing.JFrame {
  
     private String project_name = "";
     private String userPath = "";
-    private int version = 0;
+    private int version = 0; 
+    static int counter = 0; 
+    int lock = 1;
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -80,11 +82,10 @@ public class Generate_Full_Report extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    protected  void generate( File [] mydirectory , String proj_name , Helper h)
+    protected  void generate( File [] mydirectory , String proj_name , Helper h, ProgressBar1 pb)
     {
         
-                ProgressBar1 pb = new ProgressBar1();
-                pb.setVisible(true);
+                
                 File f = new File(userPath + "/"+ proj_name +  ".xls");
                 int count = 1;
                 int num = 0;
@@ -93,16 +94,21 @@ public class Generate_Full_Report extends javax.swing.JFrame {
                     try {
                         if (!f.exists()) {
 //                          System.out.println("File Does not exist ");
-                            System.out.println("File sheet " + count + " added ");
+                            System.out.println("File sheet " + count + " added "); 
+                            pb.set("Adding File Sheet " + count , ++counter);
                             WritableWorkbook workbook = null;
                             h.createSheet(workbook, f);
+                            pb.set("File sheet " + count + " added ", ++counter);
                             count++;
                         } else {
 //                System.out.println("File already found ");
                             System.out.println("File sheet " + count + " added ");
+                            pb.set("Adding File Sheet " + count , ++counter);
                             Workbook workbook = Workbook.getWorkbook(f);
                             h.addsheet(workbook, f);
                             workbook.close();
+                             pb.set("File sheet " + count + " added ", ++counter);
+
                             count++;
                         }
                     } catch (IOException | WriteException | BiffException ex) {
@@ -115,20 +121,24 @@ public class Generate_Full_Report extends javax.swing.JFrame {
                 try {
                     m.addCho(f);// cho and chd
 //                        obj_frame.call(num);
+                     pb.set("CHO and CHD added ",++counter);
                     m.addFchAndLch(f); //fch lch  frch csd csbs lca lcd
 //                        obj_frame.call(num);
+                    pb.set("FCH LCH FRCH CSD CSBS LCA LCD added", ++counter);
                     m.addWchAndWCD(f); // wch and wcd
 //                        obj_frame.call(num);
+                     pb.set("WCH and WCD added ",++counter);
                     m.addAcdfAndATAF(f); // ACDF and ATAF and WFR and ICP
 //                        obj_frame.call(num);
-                    pb.set("ACDF AND ATAF added ", num);
+                    pb.set("ACDF AND ATAF added ",++counter);
                     m.addCP(f);// cp
 //                        obj_frame.call(num);
-                    pb.set("CP added ", num);
+                    pb.set("CP added ", ++counter);
 //                    obj_frame.dispose();
-                    pb.setVisible(false);
-                    Complete c = new Complete(f);
-                    c.setVisible(true);
+//                    pb.setVisible(false);
+                    pb.set_output("Evolution Metrics Added");
+//                    Complete c = new Complete(f);
+//                    c.setVisible(true);
 //                    Reset();
                 } catch (IOException | BiffException | WriteException ex) {
                     Logger.getLogger(MainUI.class.getName()).log(Level.SEVERE, null, ex);
@@ -136,25 +146,31 @@ public class Generate_Full_Report extends javax.swing.JFrame {
        
     }
     
-    private void generate_cnk(File [] mydirectory)
+    private void generate_cnk(File [] mydirectory, ProgressBar1 pb)
     {
       
                int i = 0; 
                String filename = "cnk_version";
                for (File cnkfile : mydirectory) {
-                   
+                    
+                   pb.set("Adding C and K File for version : " + (i+1), ++ counter);
                    if(i+1<10)
                    {
                        UnderstandHelper h = new UnderstandHelper(cnkfile , userPath , filename +"0" + (i+1));
-                         h.execute();
+                         h.execute(pb);
                    }
                    else 
                    { UnderstandHelper h = new UnderstandHelper(cnkfile , userPath , filename + (i+1));
-                     h.execute();
+                     h.execute(pb);
                    }
                    
+                   pb.set("Added C and K File for version : " + (i+1), ++ counter);
+                   
                    i++;
-               }
+               } 
+               
+               pb.set_output("C and K Metrics Added");
+               
 //               throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
           
     }
@@ -204,101 +220,130 @@ public class Generate_Full_Report extends javax.swing.JFrame {
             return ;
         }
 //        String proj_name = mydirectory[0].getName();
+        ProgressBar1 pb = new ProgressBar1();
+          
+                    pb.setVisible(true);
+        
         new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    select_label.setText(mydirectory[0].getParent());
-                    }
-            }).start();
-        
-        Thread T1 = new Thread(new Runnable() {
 
            @Override
            public void run() {
 //               throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-               generate(mydirectory , project_name , h);
+               generate(mydirectory , project_name , h, pb);
+               System.out.println("evolution thread alive " );
            }
-       });
+       }).start();
         
-        Thread T2 = new Thread(new Runnable() {
-
+        
+        new Thread(new Runnable() {
            @Override
            public void run() {
 //               throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-              generate_cnk(mydirectory); 
+              generate_cnk(mydirectory,pb);  
+               System.out.println("");
+              lock = 0;
            }
-       });
+       }).start();
         
-        T1.start();
-        T2.start();
         
-        Thread T3 = new Thread(new Runnable() {
-
+       
+      new Thread(new Runnable() {
            @Override
+           @SuppressWarnings("empty-statement")
            public void run() {
 //               throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-               XlstoCsv xl = new XlstoCsv();
+               while(lock!=0)
+               { 
+                   System.out.println(" xls conversion thread active " + lock);
+                   
+               };
+               XlstoCsv xl = new XlstoCsv() ;
+               pb.set("Converting excel to csv ", ++counter);
                File f = new File(userPath + "/" + project_name + ".xls");
                xl.convert_explicit(f, userPath);
                System.out.println("Excel successfully converted into csv");
+               pb.set("Excel successfully converted into csv",++counter);
+               pb.set_output("Excel from Evolution Converted to CSV");
+               
+               
+               lock = 2;
            }
-       });
+       }).start();
                 
-       Thread T4 = new Thread(new Runnable() {
+        new Thread(new Runnable() {
 
            @Override
            public void run() {
-                 
+                 while(lock!=2)
+                 {
+                     System.out.println("C and K filter thread active " + lock);
+                 };
+               pb.set("Applying C and K Filter " , ++ counter);
                File folder = new File(userPath);
                CandKFilter1 c = new CandKFilter1();
                for(int i = 0 ; i< version ; i++)
                {
                    File project_file = null;
-                   File candkfile = null;
+                   File candkfile = null; 
+                   
+                   
                    if(i+1<10)
                    {
                        project_file = new File(userPath + "/version0" + (i+1) + ".csv");
                        candkfile = new File(userPath + "/cnk_version0" + (i+1) + ".csv");
+                       pb.set("Applying Filter on version 0" + (i+1) , ++counter);
                    }
                    else
                    {
                        project_file = new File(userPath + "/version" + (i+1) + ".csv");
                        candkfile = new File(userPath + "/cnk_version" + (i+1) + ".csv");
+                       pb.set("Applying Filter on version " + (i+1) , ++counter);
                    }
                     
                    System.out.println(project_file + " and " + candkfile);
                    CSVFile.count = 0;
                    CSVFile.metric_names.clear();
                    c.merge_candk( project_file,candkfile);
+                   
+                   pb.set("Filtered  version " + (i+1) , ++counter);
                }
                
                System.out.println("all files merged");
+               pb.set_output("All Files Merged");
                 
+               lock = 3;
            }
-       }); 
+       }).start();
        
-       Thread T5 = new Thread(new Runnable() {
+       new Thread(new Runnable() {
 
            @Override
            public void run() {
 //               throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+               while(lock!=3)
+               {
+                   System.out.println("Model generation thread active" + lock);
+               };
                GenerateModel gm = new GenerateModel(userPath,version);
+               pb.set("Generating models ",++counter);
                gm.generate();
+               pb.set_output("Models Generated");
+               pb.set_output("Attribute Selection File Generated");
+               pb.set_output("Accuracy Calculated");
+               String file_name = (new File(userPath).getName());
+               File f1 = new File(userPath + "/" + file_name + "_accuracy.csv");
+               File f2 = new File(userPath + "/" + file_name + "_attribute.csv");
+               pb.setVisible(false);
+               CompleteReport cr = new CompleteReport(f1, f2);
+               cr.setVisible(true);
            }
-       });
-        try { 
-            
-            T2.join(); // building  the csv for c and k using understand
-            T3.start(); // extracting the csv from excel sheet
-            T3.join(); // waiting for extraction to be finished
-            T4.start(); // merging excel project file and c and k
-            System.out.println("Metrics populated");
-            T4.join();
-            T5.start();
-        } catch (InterruptedException ex) {
-            Logger.getLogger(Generate_Full_Report.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
+       }).start();
+
+       
+       
+       System.out.println("Metrics populated");
+       
+       
        
     }
    

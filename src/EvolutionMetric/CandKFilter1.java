@@ -530,10 +530,16 @@ public class CandKFilter1 extends javax.swing.JFrame {
 
                         if (ismatch(file_name, candkfilename)) 
                         {  
-                            
-                            for(int i = 0 ; i< data1.metric.size() ; i++)
+                            int i ;
+                            for( i = 0 ; i< data1.metric.size() ; i++)
                             {
                                 new_data.append(","  + data1.metric.get(i));
+                            }
+                            
+                             while(i<6)
+                            {
+                                new_data.append(","  + 0);
+                                i++;
                             }
                             new_data.append("\n");
                             flag = true;
