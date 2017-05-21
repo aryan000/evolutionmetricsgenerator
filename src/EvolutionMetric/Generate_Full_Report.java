@@ -94,20 +94,20 @@ public class Generate_Full_Report extends javax.swing.JFrame {
                     try {
                         if (!f.exists()) {
 //                          System.out.println("File Does not exist ");
-                            System.out.println("File sheet " + count + " added "); 
-                            pb.set("Adding File Sheet " + count , ++counter);
+                            System.out.println("File sheet for version  " + count + " added "); 
+                            pb.set("Adding File Sheet for version " + count , ++counter);
                             WritableWorkbook workbook = null;
                             h.createSheet(workbook, f);
-                            pb.set("File sheet " + count + " added ", ++counter);
+                            pb.set("File sheet for version " + count + " added ", ++counter);
                             count++;
                         } else {
 //                System.out.println("File already found ");
-                            System.out.println("File sheet " + count + " added ");
-                            pb.set("Adding File Sheet " + count , ++counter);
+                            System.out.println("File sheet for version" + count + " added ");
+                            pb.set("Adding File Sheet  for version " + count , ++counter);
                             Workbook workbook = Workbook.getWorkbook(f);
                             h.addsheet(workbook, f);
                             workbook.close();
-                             pb.set("File sheet " + count + " added ", ++counter);
+                             pb.set("File sheet for version " + count + " added ", ++counter);
 
                             count++;
                         }
@@ -153,7 +153,7 @@ public class Generate_Full_Report extends javax.swing.JFrame {
                String filename = "cnk_version";
                for (File cnkfile : mydirectory) {
                     
-                   pb.set("Adding C and K File for version : " + (i+1), ++ counter);
+                   pb.set("Adding OO  File for version : " + (i+1), ++counter);
                    if(i+1<10)
                    {
                        UnderstandHelper h = new UnderstandHelper(cnkfile , userPath , filename +"0" + (i+1));
@@ -164,12 +164,12 @@ public class Generate_Full_Report extends javax.swing.JFrame {
                      h.execute(pb);
                    }
                    
-                   pb.set("Added C and K File for version : " + (i+1), ++ counter);
-                   
+                   pb.set("Added OO  File for version : " + (i+1), ++counter);
+                   counter += 5;
                    i++;
                } 
                
-               pb.set_output("C and K Metrics Added");
+               pb.set_output("OO  Metrics Added");
                
 //               throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
           

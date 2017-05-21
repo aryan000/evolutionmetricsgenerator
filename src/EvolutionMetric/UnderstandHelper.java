@@ -62,7 +62,7 @@ public class UnderstandHelper
 //                       System.out.println(line);
 //                       System.err.println(line);
                    } 
-                   System.out.println("C and K Analysis Complete for " + file_name);
+                   System.out.println("OO Analysis Complete for " + file_name);
         } catch (IOException ex) {
             Logger.getLogger(UnderstandHelper.class.getName()).log(Level.SEVERE, null, ex);
         } 
@@ -83,7 +83,7 @@ public class UnderstandHelper
         command += " -metricsOutputFile " + userPath +"/" +  file_name + ".csv";
         command += " analyze metrics ";
         
-        pb.set_output("Processing C and K for : " + file_name + "....");
+        pb.set_output("Processing OO metrics  for : " + file_name + "....");
 //        System.out.println(command);
         
         ProcessBuilder builder = new ProcessBuilder("cmd.exe", "/c",command);
@@ -106,7 +106,7 @@ public class UnderstandHelper
 //                       pb.set(line);
 //                       System.err.println(line);
                    } 
-                   pb.set_output("C and K for " + file_name + "generated.");
+                   pb.set_output("OO metrics for " + file_name + "generated.");
         } catch (IOException ex) {
             Logger.getLogger(UnderstandHelper.class.getName()).log(Level.SEVERE, null, ex);
         } 

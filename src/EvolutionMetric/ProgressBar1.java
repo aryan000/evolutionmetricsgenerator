@@ -1,12 +1,11 @@
 package EvolutionMetric;
 
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
+import static org.apache.xmlbeans.impl.xb.xsdschema.Attribute.Use.Enum.table;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -145,9 +144,17 @@ public class ProgressBar1 extends javax.swing.JFrame {
             public void run() {
 
             DefaultTableModel model = (DefaultTableModel) progress_table.getModel();
-            model.insertRow(0, new Object[]{count++,str});
-//            model.addRow(new Object[]{count++,str});
+//            model.insertRow(0, new Object[]{count++,str});
+            
+            model.addRow(new Object[]{count++,str});
+//            int viewRow = progress_table.convertRowIndexToView(model.getFirstRow());
+            
+//            progress_table.scrollRectToVisible(progress_table.getCellRect(model.getRowCount(), 0, true)); 
+            progress_pane.getViewport().scrollRectToVisible(progress_table.getCellRect(progress_table.getRowCount()-1, 0 , true));
+//            scrollPane.getViewPort().scrollRectToVisible(table.getCellRect(table.getRowCount()-1, 0, true));
             progress_bar.setValue(value);
+            model.fireTableDataChanged();
+            
             }
         }).start();
     }
